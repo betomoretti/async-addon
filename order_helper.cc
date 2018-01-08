@@ -1,13 +1,10 @@
+#include <napi.h>
 #include "order.h"
-#include <v8.h>
-#include <nan.h>
 
-using namespace v8;
-
-Order unpack_order(Local<Object> order_obj) {
-  Local<Value> key = Nan::New("total").ToLocalChecked();
-  Handle<Value> total = Nan::Get(order_obj, key).ToLocalChecked();
-  Order ord(total->NumberValue());
+Order unpack_order(Napi::Env env, Napi::Object order_obj) {
+  Napi::String key = Napi::String::New(env, "total");
+  Napi::Value total = order_obj.Get(key);
+  Order ord(total.ToNumber());
 
   return ord;
 }

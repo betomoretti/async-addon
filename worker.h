@@ -1,22 +1,25 @@
+#include <napi.h>
+
 #ifndef WORKER_H
 #define WORKER_H
 
-class Worker : public Nan::AsyncWorker {
+class Worker : public Napi::AsyncWorker {
   public:
-    Worker(Nan::Callback *callback,
-               std::vector<Order> &orders,
+    Worker(Napi::Function& callback,
+              std::vector<Order> &orders,
               int total,
-              std::string workerId)
-      : Nan::AsyncWorker(callback), orders(orders), total(total), workerId(workerId) {}
+              int workerId,
+              bool breakIt)
+      : Napi::AsyncWorker(callback), orders(orders), total(total), workerId(workerId), breakIt(breakIt) {}
 
     void Execute ();
   protected:
-    void HandleOKCallback();
-    void HandleErrorCallback();
+    void OnOK();
   private:
     std::vector<Order> orders;
     int total;
-    std::string workerId;
+    int workerId;
+    bool breakIt;
 };
 
 #endif

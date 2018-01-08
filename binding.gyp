@@ -1,11 +1,14 @@
 {
   "targets": [
-    {
+    { 
+      "cflags!": [ "-fno-exceptions" ],
+      "cflags_cc!": [ "-fno-exceptions" ],
       "include_dirs" : [
-        "<!(node -e \"require('nan')\")"
+        "<!@(node -p \"require('node-addon-api').include\")"
       ],
       "target_name": "async",
-      "sources": [ "async.cc", "order.cc", "worker.cc", "order_helper.cc" ]
+      "sources": [ "order_helper.cc", "async.cc", "order.cc", "worker.cc" ],
+      'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ]
     }
   ]
 }
