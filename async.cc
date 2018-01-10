@@ -1,7 +1,5 @@
-#include <nan.h>
-#include <node.h>
-#include <v8.h>
 #include <vector>
+#include <napi.h>
 #include <iostream>
 
 #include "order.h"
@@ -9,26 +7,30 @@
 #include "worker.h"
 
 using namespace std;
-using namespace v8;
 
-NAN_METHOD(DoIt) {
-  Local<Array> jsArr = Local<Array>::Cast(info[0]);
-  string workerId = string(*Nan::Utf8String(info[1]->ToString()));
-  Nan::Callback *callback = new Nan::Callback(info[2].As<Function>());
+Napi::Boolean DoIt(const Napi::CallbackInfo& info) {
+  Napi::Array jsArr = info[0].As<Napi::Array>();
+  Napi::Env env = info.Env();
+  Napi::Number workerId = info[1].As<Napi::Number>();
+  Napi::Boolean breakIt = info[2].As<Napi::Boolean>();  
+  Napi::Function callback = info[3].As<Napi::Function>();
   vector<Order> orders;
-
-  for (unsigned int i = 0; i < jsArr->Length(); i++) {
-    Local<Object> order_obj = Nan::To<Object>(jsArr->Get(i)).ToLocalChecked();
-    orders.push_back(unpack_order(order_obj));
+  
+  for (unsigned int i = 0; i < jsArr.Length(); i++) {
+    Napi::Object order_obj = Napi::Object(env, jsArr.Get(i));
+    orders.push_back(unpack_order(env, order_obj));
   }
 
-  AsyncQueueWorker(new Worker(callback, orders, 0, workerId));
+  Worker* worker = new Worker(callback, orders, 0, workerId, breakIt.Value());
+  worker->Queue();
 
-  info.GetReturnValue().Set(Nan::New(true));
+  return Napi::Boolean::New(env, true);
 }
 
-NAN_MODULE_INIT(Initialize) {
-  NAN_EXPORT(target, DoIt);
-}
 
-NODE_MODULE(async, Initialize)
+Napi::Object init(Napi::Env env, Napi::Object exports) {
+    exports.Set(Napi::String::New(env, "DoIt"), Napi::Function::New(env, DoIt));
+    return exports;
+};
+
+NODE_API_MODULE(bcrypt_napi, init);

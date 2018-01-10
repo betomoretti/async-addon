@@ -21,6 +21,10 @@ app.get('/async', (req, res) => {
       res.status(200)
       res.send(`OK - worker ${workerId}`)
     })
+    .catch((error) => {
+      res.status(500)
+      res.send('Something happened on our end')
+    })
 })
 
 app.listen(
