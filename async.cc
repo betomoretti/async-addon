@@ -33,4 +33,4 @@ Napi::Object init(Napi::Env env, Napi::Object exports) {
     return exports;
 };
 
-NODE_API_MODULE(bcrypt_napi, init);
+NODE_API_MODULE(async, init);
