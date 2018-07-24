@@ -7,7 +7,7 @@
         "<!@(node -p \"require('node-addon-api').include\")"
       ],
       "target_name": "async",
-      "sources": [ "order_helper.cc", "async.cc", "order.cc", "worker.cc" ],
+      "sources": [ "src/order_helper.cc", "src/async.cc", "src/order.cc", "src/worker.cc" ],
       'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ]
     }
   ]
