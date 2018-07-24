@@ -7,7 +7,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function asyncTest(requestId) {
+function nativeTest(requestId) {
   const booleans = [false, false, false, true]
   const breakIt = booleans[getRandomInt(1,5)]
 
@@ -28,4 +28,4 @@ function asyncTest(requestId) {
   })
 }
 
-module.exports = asyncTest;
+module.exports = nativeTest;
