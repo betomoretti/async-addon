@@ -2,6 +2,7 @@
 
 const workerTest = require('./lib/worker')
 const nativeTest = require('./lib/native')
+const nativeBufferTest = require('./lib/native_buffer')
 const express = require('express')
 const app = express()
 let syncCounts = 0
@@ -17,6 +18,19 @@ app.get('/worker', (req, res) => {
 app.get('/native', (req, res) => {
   asyncCounts += 1
   nativeTest(asyncCounts)
+    .then((workerId) => {
+      res.status(200)
+      res.send(`OK - worker ${workerId}`)
+    })
+    .catch((error) => {
+      res.status(500)
+      res.send('Something happened on our end')
+    })
+})
+
+app.get('/native-buffer', (req, res) => {
+  asyncCounts += 1
+  nativeBufferTest(asyncCounts)
     .then((workerId) => {
       res.status(200)
       res.send(`OK - worker ${workerId}`)

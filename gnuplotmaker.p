@@ -23,5 +23,5 @@ set ylabel "response time (ms)"
 set datafile separator '\t'
 
 #plot data from "out.data" using column 9 with smooth sbezier lines
-plot "worker.tsv" using 4 with lines title "Using workers", "native.tsv" using 4 with lines title  "Using native"
+plot "worker.tsv" using 4 with lines title "Using workers", "native.tsv" using 4 with lines title  "Using native", "buffer.tsv" using 4 with lines title  "Using buffer"
 exit
