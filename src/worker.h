@@ -6,17 +6,17 @@
 class Worker : public Napi::AsyncWorker {
   public:
     Worker(Napi::Function& callback,
-              std::vector<Order> &orders,
+              char* buffer,
               int total,
               int workerId,
               bool breakIt)
-      : Napi::AsyncWorker(callback), orders(orders), total(total), workerId(workerId), breakIt(breakIt) {}
+      : Napi::AsyncWorker(callback), buffer(buffer), total(total), workerId(workerId), breakIt(breakIt) {}
 
     void Execute ();
   protected:
     void OnOK();
   private:
-    std::vector<Order> orders;
+    char* buffer;
     int total;
     int workerId;
     bool breakIt;

@@ -1,4 +1,3 @@
-#include <vector>
 #include <napi.h>
 #include <iostream>
 
@@ -9,19 +8,14 @@
 using namespace std;
 
 Napi::Boolean DoIt(const Napi::CallbackInfo& info) {
-  Napi::Array jsArr = info[0].As<Napi::Array>();
   Napi::Env env = info.Env();
+  std::cout << "Mapping params.." << std::endl;
+  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
   Napi::Number workerId = info[1].As<Napi::Number>();
-  Napi::Boolean breakIt = info[2].As<Napi::Boolean>();  
+  Napi::Boolean breakIt = info[2].As<Napi::Boolean>(); 
   Napi::Function callback = info[3].As<Napi::Function>();
-  vector<Order> orders;
-  
-  for (unsigned int i = 0; i < jsArr.Length(); i++) {
-    Napi::Object order_obj = Napi::Object(env, jsArr.Get(i));
-    orders.push_back(unpack_order(env, order_obj));
-  }
-
-  Worker* worker = new Worker(callback, orders, 0, workerId, breakIt.Value());
+  std::cout << "Queueing worker.." << std::endl;
+  Worker* worker = new Worker(callback, buffer.Data(), 0, workerId, breakIt.Value());
   worker->Queue();
 
   return Napi::Boolean::New(env, true);

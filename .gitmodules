@@ -1,0 +1,3 @@
+[submodule "include/json"]
+	path = include/json
+	url = git@github.com:nlohmann/json.git

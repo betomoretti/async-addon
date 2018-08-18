@@ -6,7 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --experimental-worker index.js",
-    "init": "cd data && node init.js"
+    "init": "cd data && node init.js",
+    "build:dev": "node-gyp build --debug",
+    "build": "node-gyp build",
+    "rebuild:dev": "node-gyp rebuild --debug",
+    "rebuild": "node-gyp rebuild",
+    "configure": "node-gyp configure",
+    "clean": "node-gyp clean"
   },
   "author": "Mariano Moretti<marianomoretti.87@gmail.com",
   "license": "ISC",
