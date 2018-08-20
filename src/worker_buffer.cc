@@ -1,15 +1,14 @@
 #include <napi.h>
 #include <vector>
 #include <iostream>
-#include "worker.h"
-#include <typeinfo>
+#include "worker_buffer.h"
 #include "../include/json/single_include/nlohmann/json.hpp"
 
 
 using json = nlohmann::json;
 using namespace std;
 
-void Worker::Execute()
+void WorkerBuffer::Execute()
 {
   cout << "Running worker\n";
 
@@ -23,7 +22,7 @@ void Worker::Execute()
   }
 }
 
-void Worker::OnOK()
+void WorkerBuffer::OnOK()
 {
   Napi::HandleScope scope(Env());
 

@@ -3,9 +3,9 @@
 #ifndef WORKER_H
 #define WORKER_H
 
-class Worker : public Napi::AsyncWorker {
+class WorkerBuffer : public Napi::AsyncWorker {
   public:
-    Worker(Napi::Function& callback,
+    WorkerBuffer(Napi::Function& callback,
               char* buffer,
               int total,
               int workerId,
