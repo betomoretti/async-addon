@@ -13,7 +13,7 @@
         "src/async.cc",
         "src/order.cc",
         "src/worker_buffer.cc",
-        "src/worker_classes.cc" ],
+        "src/worker_instances.cc" ],
       'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ]
     }
   ]

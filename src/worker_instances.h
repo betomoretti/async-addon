@@ -3,9 +3,9 @@
 #ifndef WORKER_CLASSES_H
 #define WORKER_CLASSES_H
 
-class WorkerClasses : public Napi::AsyncWorker {
+class WorkerInstances : public Napi::AsyncWorker {
   public:
-    WorkerClasses(Napi::Function& callback,
+    WorkerInstances(Napi::Function& callback,
               std::vector<Order> &orders,
               int total,
               int workerId,

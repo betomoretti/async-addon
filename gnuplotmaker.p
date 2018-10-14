@@ -2,10 +2,10 @@
 set terminal jpeg size 1280,720
 
 # save file to "benchmark.png"
-set output "benchmark-1000-n2000-d10.jpeg"
+set output "benchmark-15000-n1000-d5.jpeg"
 
 # graph title
-set title "ab 1000 -n 2000 -c 10"
+set title "ab 15000 -n 1000 -c 5"
 
 #nicer aspect ratio for image size
 set size 1,0.7
