@@ -11,15 +11,17 @@ using namespace std;
 void WorkerInstances::Execute() {
   cout << "Running worker\n";
   int internalTotal = 0;
-  // if (breakIt) {
-  //   SetError("Something happened");
-  // }
 
   // looping over the list
   std::chrono::steady_clock::time_point begin_instances_iteration = std::chrono::steady_clock::now();
   for (unsigned int i = 0; i < orders.size(); i++)
   {
     Order order = orders.at(i);
+    for (unsigned int j = 0; j < orders.size(); j++)
+    {
+      Order order = orders.at(j);
+      internalTotal = internalTotal + order.total;
+    }
     total = total + order.total;
   }
   std::chrono::steady_clock::time_point end_instances_iteration = std::chrono::steady_clock::now();
@@ -31,9 +33,3 @@ void WorkerInstances::OnOK() {
 
   Callback().Call({Env().Undefined(), Napi::Number::New(Env(), total), Napi::Number::New(Env(), workerId)});
 }
-
-// for (unsigned int j = 0; j < orders.size(); j++)
-// {
-//   Order order = orders.at(j);
-//   internalTotal = internalTotal + order.total;
-// }

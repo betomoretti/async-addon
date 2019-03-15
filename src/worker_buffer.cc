@@ -29,6 +29,10 @@ void WorkerBuffer::Execute()
   for (auto& v: document.GetArray())
   {
     auto obj = v.GetObject();
+    for (auto& v: document.GetArray())
+    {
+      internalTotal = internalTotal + obj["total"].GetInt();
+    }
     total = total + obj["total"].GetInt();
   }
   std::chrono::steady_clock::time_point end_buffer_iteration = std::chrono::steady_clock::now();
@@ -42,7 +46,3 @@ void WorkerBuffer::OnOK()
   Callback().Call({Env().Undefined(), Napi::Number::New(Env(), total), Napi::Number::New(Env(), workerId)});
 }
 
-// for (auto& v: document.GetArray())
-// {
-//   internalTotal = internalTotal + obj["total"].GetInt();
-// }
